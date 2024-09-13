@@ -1,73 +1,56 @@
 "use client";
 import { useState } from "react";
-import Head from "next/head"; // Next.js's Head component for meta tags
-import { auth } from "../lib/firebase"; // Adjust the import path as necessary
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { updateProfile } from "firebase/auth";
-
-export default function SignupPage() {
-  const [createUserWithEmailAndPassword, userCredential, loading, error] =
-    useCreateUserWithEmailAndPassword(auth);
+import { useRouter } from "next/navigation";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../lib/firebase";
+export default function LogInPage() {
+  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const [formError, setFormError] = useState("");
   const [response, setResponse] = useState("");
+  const route = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = {
-      firstName: formData.get("firstName"),
       email: formData.get("email"),
       password: formData.get("password"),
     };
+    console.log(data.email);
     try {
-      const result = await createUserWithEmailAndPassword(
+      const result = await signInWithEmailAndPassword(
         data.email,
         data.password
       );
-      const user = result.user;
+      console.log(result);
 
-      if (user) {
-        // Update user profile with the first name
-        await updateProfile(user, {
-          displayName: data.firstName,
-        });
-        console.log("User signed up and profile updated:", user);
+      if (result) {
+        route.push("/");
         setResponse("Successful");
+      } else {
+        setResponse("Login failed. Please try again.");
       }
     } catch (err) {
-      console.error("Error signing up:", err.message);
-      setFormError(`Sign-up error: ${err.message}`);
+      console.error("Error logging in:", err.message);
+      setFormError(`Login error: ${err.message}`);
+      setResponse(formError);
     }
   };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <div className="w-full max-w-md p-8 text-slate-600 space-y-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center text-gray-700">
-          Sign Up
-        </h2>
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md text-slate-600">
+        <h2 className="text-2xl font-bold text-center text-gray-700">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {response === "Successful" ? (
-            <p className="text-green-500">{response}</p>
-          ) : formError ? (
-            <p className="text-red-500">{formError}</p>
-          ) : null}
-
-          <div>
-            <label
-              htmlFor="firstName"
-              className="block text-sm font-medium text-gray-700"
+          {response && (
+            <p
+              className={`text-${
+                response === "Successful" ? "green" : "red"
+              }-500`}
             >
-              First Name
-            </label>
-            <input
-              type="text"
-              name="firstName"
-              id="firstName"
-              required
-              className="w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Your First Name"
-            />
-          </div>
+              {response}
+            </p>
+          )}
 
           <div>
             <label
@@ -107,17 +90,16 @@ export default function SignupPage() {
             <button
               type="submit"
               className="w-full px-4 py-2 font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              disabled={loading}
             >
-              {loading ? "Signing Up..." : "Sign Up"}
+              Log in
             </button>
           </div>
         </form>
 
         <p className="text-sm text-center text-gray-600">
-          Already have an account?{" "}
-          <a href="/login" className="text-blue-500 hover:underline">
-            Login
+          Don't have an account yet?{" "}
+          <a href="/signup" className="text-blue-500 hover:underline">
+            Sign Up
           </a>
         </p>
       </div>

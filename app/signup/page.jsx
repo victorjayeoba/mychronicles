@@ -1,5 +1,5 @@
 import Head from "next/head"; // Next.js's Head component for meta tags
-import SignupPage from "../components/SignUp";
+import SignupPage from "../pages/SignUp";
 export const metadata = {
   title: "Sign Up - My Chronicles",
   description:
