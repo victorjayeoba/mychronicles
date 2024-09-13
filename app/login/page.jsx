@@ -30,7 +30,7 @@ export const metadata = {
   },
 };
 
-export default function SignupPage() {
+export default function LogIn() {
   return (
     <>
       <LogInPage />

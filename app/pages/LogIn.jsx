@@ -97,7 +97,7 @@ export default function LogInPage() {
         </form>
 
         <p className="text-sm text-center text-gray-600">
-          Don't have an account yet?{" "}
+          Do not have an account yet?{" "}
           <a href="/signup" className="text-blue-500 hover:underline">
             Sign Up
           </a>
