@@ -40,33 +40,6 @@ export default function SignupPage() {
 
   return (
     <>
-      <Head>
-        <title>Sign Up - My Chronicles</title>
-        <meta
-          name="description"
-          content="Create an account on My Chronicles to access exclusive features and join our community."
-        />
-        <meta name="keywords" content="signup, registration, create account" />
-        <meta property="og:title" content="Sign Up - My Chronicles" />
-        <meta
-          property="og:description"
-          content="Join My Chronicles by creating your account. Enjoy personalized features and updates!"
-        />
-        <meta
-          property="og:image"
-          content="https://dummyimage.com/800x600/7715e8/fafafa.png&text=My+Chronicles+Sign+Up"
-        />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Sign Up - My Chronicles" />
-        <meta
-          name="twitter:description"
-          content="Create an account on My Chronicles to access exclusive features and join our community."
-        />
-        <meta
-          name="twitter:image"
-          content="https://dummyimage.com/800x600/7715e8/fafafa.png&text=My+Chronicles+Sign+Up"
-        />
-      </Head>
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="w-full max-w-md p-8 text-slate-600 space-y-6 bg-white rounded-lg shadow-md">
           <h2 className="text-2xl font-bold text-center text-gray-700">
